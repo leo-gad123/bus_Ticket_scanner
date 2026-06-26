@@ -133,14 +133,18 @@
 <body>
 
 <div class="container">
-    <h2>QR Code Generator</h2>
-    <p>Type a link or text below to generate your code:</p>
+    <h2>QR Code Ticket Generator</h2>
+    <p>Paste your ticket data in JSON format and see the QR code update instantly.</p>
     
-    <!-- Input box where you type your URL or text -->
-    <input type="text" id="text-input" value="https://google.com" placeholder="Type here...">
+    <textarea id="json-input" placeholder='{
+  "ticket_id": "T001",
+  "passenger": "Leo Gad",
+  "route": "Kigali - Nyabugogo",
+  "status": "Paid"
+}'></textarea>
+    <div class="helper-text">Use valid JSON to generate a ticket QR code. The QR payload will exactly match your input.</div>
+    <div class="error-text" id="error-message"></div>
     
-    <!-- The library will inject the generated QR code image inside this div -->
-    <div id="qrcode"></div>
 </div>
 
 <script>
