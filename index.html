@@ -71,11 +71,12 @@
             margin-bottom: 28px;
             line-height: 1.6;
         }
-        input {
+        textarea {
             padding: 16px 20px;
             width: 100%;
             max-width: 100%;
-            font-size: 1rem;
+            min-height: 160px;
+            font-size: 0.95rem;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(161, 140, 209, 0.25);
             border-radius: 14px;
@@ -83,20 +84,37 @@
             outline: none;
             transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
             letter-spacing: 0.01em;
+            resize: vertical;
+            font-family: Consolas, 'Courier New', monospace;
+            line-height: 1.5;
         }
-        input::placeholder {
+        textarea::placeholder {
             color: rgba(255, 255, 255, 0.38);
         }
-        input:hover {
+        textarea:hover {
             transform: translateY(-1px);
         }
-        input:focus {
+        textarea:focus {
             border-color: #9b59b6;
             box-shadow: 0 0 0 5px rgba(155, 89, 182, 0.18);
             background: rgba(255, 255, 255, 0.11);
         }
+        .helper-text {
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.95rem;
+            margin: 12px auto 20px;
+            max-width: 420px;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .error-text {
+            color: #ff7f8f;
+            margin-top: 10px;
+            font-size: 0.92rem;
+            min-height: 1.2em;
+        }
         #qrcode {
-            margin: 30px auto 0;
+            margin: 20px auto 0;
             display: inline-flex;
             justify-content: center;
             align-items: center;
