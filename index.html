@@ -3,171 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple QR Code Generator</title>
-    <!-- We load a safe, popular QR code library from a CDN -->
+    <title>QR Code Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at top left, #5d5fe8 0%, transparent 30%),
-                        radial-gradient(circle at bottom right, #ff4d8d 0%, transparent 28%),
-                        linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #1b1a34 100%);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f4f9;
         }
         .container {
-            position: relative;
-            width: min(100%, 420px);
-            background: rgba(18, 18, 38, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 44px 36px 36px;
-            border-radius: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: 0 28px 80px -30px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         }
-        .container::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(255, 77, 141, 0.55), rgba(161, 140, 209, 0.55));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
-            pointer-events: none;
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .container:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 38px 90px -30px rgba(0, 0, 0, 0.7);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-        h2 {
-            font-size: 2rem;
-            line-height: 1.05;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(90deg, #f8b195, #c06c84, #6c5b7b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 12px;
-            text-shadow: 0 12px 20px rgba(120, 100, 160, 0.12);
-        }
-        p {
-            color: rgba(255, 255, 255, 0.72);
-            font-size: 1rem;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-        textarea {
-            padding: 16px 20px;
-            width: 100%;
-            max-width: 100%;
-            min-height: 160px;
-            font-size: 0.95rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(161, 140, 209, 0.25);
-            border-radius: 14px;
-            color: #f8f8ff;
-            outline: none;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-            letter-spacing: 0.01em;
-            resize: vertical;
-            font-family: Consolas, 'Courier New', monospace;
-            line-height: 1.5;
-        }
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.38);
-        }
-        textarea:hover {
-            transform: translateY(-1px);
-        }
-        textarea:focus {
-            border-color: #9b59b6;
-            box-shadow: 0 0 0 5px rgba(155, 89, 182, 0.18);
-            background: rgba(255, 255, 255, 0.11);
-        }
-        .helper-text {
-            color: rgba(255, 255, 255, 0.62);
-            font-size: 0.95rem;
-            margin: 12px auto 20px;
-            max-width: 420px;
-            text-align: left;
-            line-height: 1.6;
-        }
-        .error-text {
-            color: #ff7f8f;
+        button {
+            padding: 10px 20px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
             margin-top: 10px;
-            font-size: 0.92rem;
-            min-height: 1.2em;
+            margin-left: 5px;
+        }
+        button:hover {
+            background: #218838;
         }
         #qrcode {
-            margin: 20px auto 0;
-            display: inline-flex;
+            margin: 30px auto;
+            display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-            border-radius: 22px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 18px 40px -26px rgba(0, 0, 0, 0.6);
-        }
-        #qrcode img, #qrcode canvas {
-            border-radius: 14px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            padding: 20px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h2>QR Code Ticket Generator</h2>
-    <p>Paste your ticket data in JSON format and see the QR code update instantly.</p>
-    
-    <textarea id="json-input" placeholder='{
-  "ticket_id": "T001",
-  "passenger": "Leo Gad",
-  "route": "Kigali - Nyabugogo",
-  "status": "Paid"
-}'></textarea>
-    <div class="helper-text">Use valid JSON to generate a ticket QR code. The QR payload will exactly match your input.</div>
-    <div class="error-text" id="error-message"></div>
-    
+    <h2>Bus Ticket QR Code Generator</h2>
+    <p>Enter ticket information:</p>
+    <input type="text" id="text-input" value="TICKET-001" placeholder="Enter ticket ID or URL...">
+    <div id="qrcode"></div>
+    <button onclick="downloadQR()">Download QR Code</button>
 </div>
 
 <script>
-    // 1. Grab the HTML elements
     const input = document.getElementById("text-input");
     const qrDiv = document.getElementById("qrcode");
-
-    // 2. Initialize the QR Code generator attached to our div
-    const qrcode = new QRCode(qrDiv, {
+    
+    let qrcode = new QRCode(qrDiv, {
         text: input.value,
-        width: 180,
-        height: 180,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H // 'H' stands for High error correction
+        width: 300,
+        height: 300,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
-
-    // 3. Listen for typing events to update the QR code instantly
+    
     input.addEventListener("input", (e) => {
-        qrcode.clear(); // Clear the old code
-        qrcode.makeCode(e.target.value); // Generate the new one
+        qrDiv.innerHTML = "";
+        qrcode = new QRCode(qrDiv, {
+            text: e.target.value || "TICKET-001",
+            width: 300,
+            height: 300,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
     });
+    
+    function downloadQR() {
+        const canvas = qrDiv.querySelector("canvas");
+        
+        if (canvas) {
+            const dataURL = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = dataURL;
+            link.download = "bus_ticket_qr.png";
+            link.click();
+        } else {
+            alert("QR code not ready!");
+        }
+    }
 </script>
-
 </body>
 </html>
